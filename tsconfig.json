@@ -4,5 +4,6 @@
     "noImplicitThis": true,
     "noImplicitReturns": true,
     "strict": true,
+    "lib": ["ES6", "DOM", "ES2016", "ES2017"]
   },
 }
