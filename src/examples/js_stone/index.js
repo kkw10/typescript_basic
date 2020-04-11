@@ -1,3 +1,4 @@
+"use strict";
 // public     => 어디서든 접근 가능
 // protected  => 해당 클래스 및 상속 클래스에서 접근 가능
 // private    => 해당 클래스 내부에서만 접근 가능

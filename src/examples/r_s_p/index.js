@@ -1,3 +1,4 @@
+"use strict";
 var rsp = {
     ROCK: '0',
     SCISSORS: '-142px',
