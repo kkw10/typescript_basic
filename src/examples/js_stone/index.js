@@ -24,6 +24,18 @@ var Sub = /** @class */ (function () {
     return Sub;
 }());
 ;
+function isSub(data) {
+    if (data.cost) {
+        return true;
+    }
+    return false;
+}
+function isHero(data) {
+    if (data.hero) {
+        return true;
+    }
+    return false;
+}
 ;
 var opponent = {
     hero: document.getElementById('rival-hero'),
@@ -101,6 +113,15 @@ function connectCardDataToDOM(_a) {
     else {
         cardEl.querySelector('.card-cost').textContent = String(data.cost);
     }
+    cardEl.addEventListener('click', function () {
+        if (isSub(data) &&
+            data.mine === turn &&
+            !data.field) {
+            if (!deckToField({ data: data })) {
+                createDeck({ isMine: turn, count: 1 });
+            }
+        }
+    });
     dom.appendChild(cardEl);
 }
 ;
@@ -131,3 +152,32 @@ function redrawDeck(target) {
         });
     });
 }
+;
+function redrawField(target) {
+    target.field.innerHTML = '';
+    target.fieldData.forEach(function (data) {
+        connectCardDataToDOM({
+            data: data,
+            dom: target.field
+        });
+    });
+}
+;
+function deckToField(_a) {
+    var data = _a.data;
+    var target = turn ? me : opponent;
+    var currentCost = Number(target.cost.textContent);
+    if (currentCost < data.cost) {
+        alert('코스트가 모자릅니다.');
+        return true;
+    }
+    data.field = true;
+    var idx = target.deckData.indexOf(data);
+    target.deckData.splice(idx, 1);
+    target.fieldData.push(data);
+    redrawDeck(target);
+    redrawField(target);
+    target.cost.textContent = String(currentCost - data.cost);
+    return false;
+}
+;
